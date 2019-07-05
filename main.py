@@ -37,6 +37,7 @@ class SNMP:
         for i in range(len(self.info[ip])):
           self.info[ip][i][oid] = v[i].split('=')[-1].strip()
         pprint.pprint(self.info[ip])
+      return
     
   def snmpRun(self, ip, oid):
     return self.localAccessRun([

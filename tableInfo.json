@@ -26,6 +26,5 @@
   "ifJnxOutErrors": "TINYTEXT",
   "ifJnxCollisions": "TINYTEXT",
   "ifJnxOutQDrops": "TINYTEXT",
-  "jnxIfFcInlineHCOutPkts": "TINYTEXT",
   "ifJnxCarrierTrans": "TINYTEXT"
 }

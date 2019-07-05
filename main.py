@@ -18,6 +18,16 @@ class SNMP:
     self.ips = ips
     self.oids = oids
     
+  def build(self):
+    documents = []
+    for ip in self.ips:
+      for i in range(len(self.info[ip])):
+        documents.append(self.info[ip][i])
+      return documents
+      
+  def getValue(self, s):
+    return s.split('=')[-1].split(':')[-1].strip()
+    
   def localAccessRun(self, command):
     return subprocess.run(
       args = command,
@@ -25,25 +35,18 @@ class SNMP:
       stderr = subprocess.STDOUT,
     )
     
-  def build(self):
-    documents = []
-    for ip in self.ips:
-      for i in range(len(self.info[ip])):
-        documents.append(self.info[ip][i])
-      return documents
-    
   def run(self):
     for ip in self.ips:
       self.info[ip] = []
       for line in self.snmpRun(ip, 'ifDescr'):
         self.info[ip].append({
           'ip': ip,
-          'interface': line.split('=')[-1].strip()
+          'interface': self.getValue(line)
         })
       for oid in self.oids:
         v = self.snmpRun(ip, self.oids[oid])
         for i in range(len(self.info[ip])):
-          self.info[ip][i][oid] = v[i].split('=')[-1].strip()
+          self.info[ip][i][oid] = self.getValue(v[i])
       print('ip: ' + ip)
       pprint.pprint(self.info[ip])
       return

@@ -12,24 +12,26 @@ snmpCommunity = sys.argv[1]
 def main():
   config = readJson(current_filepath + 'config.json')
   ips = readJson(config['ipsFilepath'])
+  oids = readJson(current_filepath + 'oid.json')
   for ip in ips:
     info[ip] = []
-    output = localAccessRun([
-      '/usr/bin/snmpwalk',
-      '-v', '2c',
-      '-c', snmpCommunity,
-      ip, '.1.3.6.1.2.1.2.2.1.2'
-    ]).stdout.decode('utf-8').strip()
-    for line in output.split('\n'):
+    for line in snmpRun('ifDescr'):
       info[ip].append({
-        'description': line.split(' ')[-1].strip()
+        'interface': line.split(' ')[-1].strip()
       })
     print(info[ip])
-  print(info)
 
 def readJson(filepath):
   with open(filepath, 'rb') as file:
     return json.load(file, encoding = 'utf-8')
+    
+def snmpRun(oid):
+  return localAccessRun([
+    '/usr/bin/snmpwalk',
+    '-v', '2c',
+    '-c', snmpCommunity,
+    ip, oid
+  ]).stdout.decode('utf-8').strip().split('\n')
     
 def localAccessRun(command):
   return subprocess.run(

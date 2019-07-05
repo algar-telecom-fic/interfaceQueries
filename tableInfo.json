@@ -1,7 +1,7 @@
 {
   "id": "INT AUTO_INCREMENT",
   "ip": "TINYTEXT",
-  "ifDescr": "TINYTEXT",
+  "interface": "TINYTEXT",
   "ifHighSpeed": "TINYTEXT",
   "ifOperStatus": "TINYTEXT",
   "ifLastChange": "TINYTEXT",

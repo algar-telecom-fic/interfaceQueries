@@ -27,13 +27,13 @@ class SNMP:
       self.info[ip] = []
       for line in self.snmpRun(ip, 'ifDescr'):
         self.info[ip].append({
-          'interface': line.split(' ')[-1].strip()
+          'interface': line.split('=')[-1].strip()
         })
       print(self.info[ip])
       for oid in self.oids:
         v = self.snmpRun(ip, self.oids[oid])
         for i in range(len(self.info[ip])):
-          self.info[ip][i][oid] = v[i][-1].strip()
+          self.info[ip][i][oid] = v[i].split('=')[-1].strip()
         print(self.info[ip])
     
   def snmpRun(self, ip, oid):

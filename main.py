@@ -24,7 +24,7 @@ class SNMP:
         })
       print(self.info[ip])
     
-  def localAccessRun(command):
+  def localAccessRun(self, command):
     return subprocess.run(
       args = command,
       stdout = subprocess.PIPE,

@@ -6,38 +6,50 @@ import sys
 current_filepath = os.path.realpath(
   os.path.join(os.getcwd(), os.path.dirname(__file__))
 ) + '/'
-info = {}
-snmpCommunity = sys.argv[1]
+
+class SNMP:
+  info = {}
+  
+  def __init__(self, snmpCommunity, ips, oids):
+    self.snmpCommunity = snmpCommunity
+    self.ips = ips
+    self.oids = oids
+    
+  def run(self):
+    for ip in self.ips:
+      self.info[ip] = []
+      for line in self.snmpRun('ifDescr'):
+        self.info[ip].append({
+          'interface': line.split(' ')[-1].strip()
+        })
+      print(self.info[ip])
+    
+  def localAccessRun(command):
+    return subprocess.run(
+      args = command,
+      stdout = subprocess.PIPE,
+      stderr = subprocess.STDOUT,
+    )
+    
+  def snmpRun(self, ip, oid):
+    return self.localAccessRun([
+      '/usr/bin/snmpwalk',
+      '-v', '2c',
+      '-c', self.snmpCommunity,
+      ip, oid
+    ]).stdout.decode('utf-8').strip().split('\n')
 
 def main():
   config = readJson(current_filepath + 'config.json')
-  ips = readJson(config['ipsFilepath'])
-  oids = readJson(current_filepath + 'oid.json')
-  for ip in ips:
-    info[ip] = []
-    for line in snmpRun('ifDescr'):
-      info[ip].append({
-        'interface': line.split(' ')[-1].strip()
-      })
-    print(info[ip])
+  magic = SNMP(
+    snmpCommunity = sys.argv[1],
+    ips = readJson(config['ipsFilepath']),
+    oids = readJson(current_filepath + 'oid.json')
+  )
+  magic.run()
 
 def readJson(filepath):
   with open(filepath, 'rb') as file:
     return json.load(file, encoding = 'utf-8')
-    
-def snmpRun(ip, oid):
-  return localAccessRun([
-    '/usr/bin/snmpwalk',
-    '-v', '2c',
-    '-c', snmpCommunity,
-    ip, oid
-  ]).stdout.decode('utf-8').strip().split('\n')
-    
-def localAccessRun(command):
-  return subprocess.run(
-    args = command,
-    stdout = subprocess.PIPE,
-    stderr = subprocess.STDOUT,
-  )
 
 main()

@@ -3,6 +3,8 @@ import os
 import subprocess
 import sys
 
+import pprint
+
 current_filepath = os.path.realpath(
   os.path.join(os.getcwd(), os.path.dirname(__file__))
 ) + '/'
@@ -34,7 +36,7 @@ class SNMP:
         print(v)
         for i in range(len(self.info[ip])):
           self.info[ip][i][oid] = v[i].split('=')[-1].strip()
-        print(self.info[ip])
+        pprint.pprint(self.info[ip])
     
   def snmpRun(self, ip, oid):
     return self.localAccessRun([

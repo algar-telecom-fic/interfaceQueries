@@ -15,6 +15,13 @@ class SNMP:
     self.ips = ips
     self.oids = oids
     
+  def localAccessRun(self, command):
+    return subprocess.run(
+      args = command,
+      stdout = subprocess.PIPE,
+      stderr = subprocess.STDOUT,
+    )
+    
   def run(self):
     for ip in self.ips:
       self.info[ip] = []
@@ -23,13 +30,11 @@ class SNMP:
           'interface': line.split(' ')[-1].strip()
         })
       print(self.info[ip])
-    
-  def localAccessRun(self, command):
-    return subprocess.run(
-      args = command,
-      stdout = subprocess.PIPE,
-      stderr = subprocess.STDOUT,
-    )
+      for oid in self.oids:
+        v = self.snmpRun(ip, self.oids[oid])
+        for i in range(len(self.info[ip])):
+          self.info[ip][i][oid] = v[i][-1].strip()
+        print(self.info[ip])
     
   def snmpRun(self, ip, oid):
     return self.localAccessRun([

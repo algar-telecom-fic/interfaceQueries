@@ -1,0 +1,6 @@
+{
+  "ipsFilepath": "/home/gardusi/documents/ips.json",
+  "database_name": "transport",
+  "table_name": "interfaces",
+  "databaseCredentialsFilepath": "/home/gardusi/github/database_credentials.json"
+}

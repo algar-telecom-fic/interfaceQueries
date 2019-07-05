@@ -17,7 +17,8 @@ def main():
       ip,
       '.1.3.6.1.2.1.2.2.1.2'
     ])
-    print(aux)
+    print('ip: ' + ip)
+    print(aux.stdout.decode('utf-8'))
 
 def readJson(filepath):
   with open(filepath, 'rb') as file:

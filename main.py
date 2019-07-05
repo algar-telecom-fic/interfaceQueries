@@ -5,20 +5,22 @@ import subprocess
 current_filepath = os.path.realpath(
   os.path.join(os.getcwd(), os.path.dirname(__file__))
 ) + '/'
+info = {}
+snmpCommunity = sys.argv[1]
 
 def main():
   config = readJson(current_filepath + 'config.json')
   ips = readJson(config['ipsFilepath'])
   for ip in ips:
-    aux = localAccessRun([
+    info[ip] = {}
+    output = localAccessRun([
       '/usr/bin/snmpwalk',
       '-v', '2c',
-      '-c', 'V01prO2005',
-      ip,
-      '.1.3.6.1.2.1.2.2.1.2'
-    ])
-    print('ip: ' + ip)
-    print(aux.stdout.decode('utf-8'))
+      '-c', snmpCommunity,
+      ip, '.1.3.6.1.2.1.2.2.1.2'
+    ]).stdout.decode('utf-8').split(' ')[-1].strip()
+    print(output)
+    info[ip]['desc'] = output
 
 def readJson(filepath):
   with open(filepath, 'rb') as file:

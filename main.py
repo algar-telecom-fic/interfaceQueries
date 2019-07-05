@@ -25,7 +25,7 @@ def readJson(filepath):
   with open(filepath, 'rb') as file:
     return json.load(file, encoding = 'utf-8')
     
-def snmpRun(oid):
+def snmpRun(ip, oid):
   return localAccessRun([
     '/usr/bin/snmpwalk',
     '-v', '2c',

@@ -1,9 +1,10 @@
 import json
 import os
+import pprint
 import subprocess
 import sys
-
-import pprint
+os.sys.path.append('/home/gardusi/github/sql_library/')
+from sql_json import mySQL
 
 current_filepath = os.path.realpath(
   os.path.join(os.getcwd(), os.path.dirname(__file__))

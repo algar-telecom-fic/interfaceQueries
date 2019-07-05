@@ -29,7 +29,7 @@ class SNMP:
     for ip in self.ips:
       for i in range(len(self.info[ip])):
         documents.append(self.info[ip][i])
-    return documents
+      return documents
     
   def run(self):
     for ip in self.ips:

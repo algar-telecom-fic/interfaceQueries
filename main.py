@@ -19,10 +19,13 @@ def main():
       '-v', '2c',
       '-c', snmpCommunity,
       ip, '.1.3.6.1.2.1.2.2.1.2'
-    ]).stdout.decode('utf-8')
+    ]).stdout.decode('utf-8').strip()
     for line in output.split('\n'):
-      print(line)
-    # ~ info[ip]['desc'] = output
+      info[ip].append({
+        'description': line.split(' ')[-1].strip()
+      })
+    print(info[ip])
+  print(info)
 
 def readJson(filepath):
   with open(filepath, 'rb') as file:

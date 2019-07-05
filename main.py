@@ -40,13 +40,13 @@ class SNMP:
           'ip': ip,
           'interface': line.split('=')[-1].strip()
         })
-      print('ip: ' + ip)
-      pprint.pprint(self.info[ip])
-      return
       for oid in self.oids:
         v = self.snmpRun(ip, self.oids[oid])
         for i in range(len(self.info[ip])):
           self.info[ip][i][oid] = v[i].split('=')[-1].strip()
+      print('ip: ' + ip)
+      pprint.pprint(self.info[ip])
+      return
     
   def snmpRun(self, ip, oid):
     return self.localAccessRun([

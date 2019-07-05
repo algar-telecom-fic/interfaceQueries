@@ -18,7 +18,7 @@ class SNMP:
   def run(self):
     for ip in self.ips:
       self.info[ip] = []
-      for line in self.snmpRun('ifDescr'):
+      for line in self.snmpRun(ip, 'ifDescr'):
         self.info[ip].append({
           'interface': line.split(' ')[-1].strip()
         })

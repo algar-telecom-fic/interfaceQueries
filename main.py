@@ -13,15 +13,16 @@ def main():
   config = readJson(current_filepath + 'config.json')
   ips = readJson(config['ipsFilepath'])
   for ip in ips:
-    info[ip] = {}
+    info[ip] = []
     output = localAccessRun([
       '/usr/bin/snmpwalk',
       '-v', '2c',
       '-c', snmpCommunity,
       ip, '.1.3.6.1.2.1.2.2.1.2'
-    ]).stdout.decode('utf-8').split(' ')[-1].strip()
-    print(output)
-    info[ip]['desc'] = output
+    ]).stdout.decode('utf-8')
+    for line in output.split('\n'):
+      print(line)
+    # ~ info[ip]['desc'] = output
 
 def readJson(filepath):
   with open(filepath, 'rb') as file:

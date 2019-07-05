@@ -23,8 +23,6 @@
   "ifJnxOutErrors": ".1.3.6.1.4.1.2636.3.3.1.1.24",
   "ifJnxCollisions": ".1.3.6.1.4.1.2636.3.3.1.1.25",
   "ifJnxOutQDrops": ".1.3.6.1.4.1.2636.3.3.1.1.27",
-  "jnxIfFcInlineHCInPkts": ".1.3.6.1.4.1.2636.3.3.10.2.1.1",
   "jnxIfFcInlineHCOutPkts": ".1.3.6.1.4.1.2636.3.3.10.2.1.5",
   "ifJnxCarrierTrans": ".1.3.6.1.4.1.2636.3.3.1.1.26",
-  "ifHighSpeed": "1.3.6.1.2.1.31.1.1.1.15"
 }

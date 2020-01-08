@@ -26,5 +26,8 @@
   "ifJnxOutErrors": "TINYTEXT",
   "ifJnxCollisions": "TINYTEXT",
   "ifJnxOutQDrops": "TINYTEXT",
-  "ifJnxCarrierTrans": "TINYTEXT"
+  "ifJnxCarrierTrans": "TINYTEXT",
+  "hrSystemDate": "DATETIME",
+  "dia": "DATETIME",
+  "ifAlias": "TINYTEXT"
 }

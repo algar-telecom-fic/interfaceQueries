@@ -1,0 +1,6 @@
+{
+  "ips_filepath": "/home/pediogo/bgp/ips.json",
+  "database_name": "transport",
+  "table_name": "interfaces",
+  "databaseCredentialsFilepath": "/home/pediogo/bgp/database_credentials.json"
+}
